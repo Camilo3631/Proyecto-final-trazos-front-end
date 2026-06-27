@@ -1,0 +1,14 @@
+
+
+
+const Footer = () => {
+
+
+
+
+
+
+
+}
+
+export { Footer };
