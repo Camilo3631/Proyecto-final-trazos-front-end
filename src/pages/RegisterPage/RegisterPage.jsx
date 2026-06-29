@@ -30,6 +30,13 @@ const Register = () => {
        <form
         onSubmit={handleSubmit}
          className="bg-white p-8 rounded-2xl shadow-md max-w-md">
+
+          <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
+          Mój Lekarz
+        </h1>
+
+
+
          <h2 className="text-2xl font-bold mb-6 text-center">
            Registro
           </h2>

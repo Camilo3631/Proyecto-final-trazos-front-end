@@ -22,9 +22,14 @@ const Login = () => {
 
    return (
      <div className="min-h-screen flex items-center justify-center bg-slate-700">
+
       <form 
         onSubmit={handledSubmit}
         className='bg-white p-8 rounded-2xl shadow-md max-w-md'>
+
+          <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
+            Mój Lekarz
+          </h1>
 
          <h2 className="text-2xl font-bold mb-6 text-center">
            Iniciar sesión
@@ -51,7 +56,11 @@ const Login = () => {
           className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
             Entrar
           </button>
-       </form>
+
+           <p className="text-center text-sm mt-4 text-gray-500">
+            ¿No tienes cuenta? <a href="/register" className="text-blue-600 font-semibold">Regístrate</a>
+          </p>
+       </form> 
      </div>
    )
 }
