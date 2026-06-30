@@ -1,28 +1,69 @@
 import {  useEffect, useState  } from "react";
+import { useNavigate } from "react-router"; 
 
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    
-    useEffect(() => {
 
-        console.log('Registro montado');
+    const [enviarFormulario, setEnviarFormulario] = useState(null);
 
+    const navigate  = useNavigate();
+
+
+   useEffect(() => {
+       
+    if (!enviarFormulario) return;
+
+        const RegisterUser = async () => {
+            try {
+                // Ruta actualizada a /api/register con método POST
+                const response = await fetch("http://localhost:3000/api/register", {
+                    method: "POST", 
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    // Enviamos las variables al servidor
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password
+                    }) 
+                });
+                const data = await response.json();
+                
+                console.log("Respuesta de /api/register al cargar:", data);
+
+                if (response.ok) {
+                  navigate('/Login');
+                } else {
+                    alert(data.message || 'Error al registrar');
+                }
+
+               } catch (error) {
+                console.error("Error al consumir la API en el montaje (POST):", error);
+            } finally {
+             setEnviarFormulario(false)
+            }
+           
+        };
+        RegisterUser();
         return () => {
              console.log('Registro desmontado');
         };
-    }, []);
+    }, [enviarFormulario, name, email, password, navigate]); // Al dejar el array vacío [], se ejecuta una sola vez al montar
 
 
     const handleSubmit = (e) => {
-       e.prevenDefault();
+      e.preventDefault()
 
        console.log('Name:', name);
        console.log('Email:', email);
        console.log('Password:', password);
        console.log('Confirm Password:', confirmPassword);
+
+       setEnviarFormulario(true);
     };
 
     return (
