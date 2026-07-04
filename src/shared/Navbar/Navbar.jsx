@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 const Navabar = () => {
-    const [menuAbierto, setMenuArbierto] = useState(false);
+    const [menuAbierto, setMenuAbierto] = useState(false);
 
   return (
    <nav className="bg-slate-700 shadow-md px-6 py-3 relative">
@@ -12,7 +12,7 @@ const Navabar = () => {
        </Link>
 
          <button
-          onClick={() => setMenuArbierto(!menuAbierto)}
+          onClick={() => setMenuAbierto(!menuAbierto)}
           className="text-white focus:outline-none">
           {menuAbierto ? (
            <span className="text-4xl">x</span>
@@ -26,13 +26,13 @@ const Navabar = () => {
            <div className="absolute right-4 top-16 bg-slate-800 rounded-lg shadow-lg w-48 py-2 z-50">
              <Link
               to="/login"
-              onClick={() => setMenuArbierto(false)}
+              onClick={() => setMenuAbierto(false)}
               className="block px-4 py-2 text-sm text-white hover:bg-blue-700 transition">
                Iniciar sesión
              </Link>
              <Link
               to="/register"
-              onClick={() => setMenuArbierto(false)}
+              onClick={() => setMenuAbierto(false)}
               className="block px-4 py-2 text-sm text-white hover:bg-blue-700 transition">
                Crear cuenta
               </Link>

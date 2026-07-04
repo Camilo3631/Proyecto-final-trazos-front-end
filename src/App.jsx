@@ -5,6 +5,8 @@ import { Home } from './pages/HomePage/HomePage'
 import { Login } from "./pages/LoginPage/LoginPage";
 import { Register } from './pages/RegisterPage/RegisterPage'
 import { Footer } from "./shared/Footer/Footer";
+import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
+import { AppointmentsPage } from './pages/AppointmentsPage/AppointmentsPage';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path='/Login' element={<Login/>} />
         <Route path='/Register' element={<Register/>} />
+        <Route path='/dashboard/:userId' element={<DashboardPage/>} />
+        <Route path='/appointments/:userId' element={<AppointmentsPage/>} />
      
 
 

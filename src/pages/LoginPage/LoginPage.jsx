@@ -1,71 +1,63 @@
-import {useEffect, useState  } from "react";
-
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-   const [email, setEmail] = useState('');
-   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
 
+  const handledSubmit = async (e) => {
+    e.preventDefault();
 
-   useEffect(() => {
-        console.log('Registro montado');
+    try {
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-        const consumirApiAlMontar = async () => {
-            try {
-                // Configurado como POST
-                const response = await fetch("http://localhost:3000/api/login", {
-                    method: "POST", 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({}) // Cuerpo vacío de prueba
-                });
-                const data = await response.json();
-                
-                // Verás la respuesta del servidor directamente en la consola del navegador
-                console.log("Datos obtenidos con POST al cargar:", data);
+      const data = await response.json();
 
-            } catch (error) {
-                console.error("Error al consumir la API en el montaje (POST):", error);
-            }
-        };
+      if (response.ok) {
+        console.log("Login exitoso:", data);
 
-        consumirApiAlMontar();
+        navigate("/dashboard/" + data.usuario._id);
+      } else {
+        alert(data.message || "Correo o contraseña incorrectos.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("No se pudo conectar con el servidor.");
+    }
+  };
 
-        return () => {
-             console.log('Registro desmontado');
-        };
-    }, []);
-
-
-
-   const handledSubmit = (e) => {
-      e.preventDefault();
-      console.log("Email:", email);
-      console.log("Password:", password)
-   };
-
-   return (
-     <div className="min-h-screen flex items-center justify-center bg-slate-700">
-
-      <form 
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-700">
+      <form
         onSubmit={handledSubmit}
-        className='bg-white p-8 rounded-2xl shadow-md max-w-md'>
+        className="bg-white p-8 rounded-2xl shadow-md max-w-md w-full"
+      >
+        <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
+          Mój Lekarz
+        </h1>
 
-          <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
-            Mój Lekarz
-          </h1>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Iniciar sesión
+        </h2>
 
-         <h2 className="text-2xl font-bold mb-6 text-center">
-           Iniciar sesión
-         </h2>
-
-         <input
+        <input
           type="email"
           placeholder="Email"
           className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
 
         <input
@@ -74,20 +66,25 @@ const Login = () => {
           className="w-full p-3 mb-6 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-            Entrar
-          </button>
+          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+        >
+          Entrar
+        </button>
 
-           <p className="text-center text-sm mt-4 text-gray-500">
-            ¿No tienes cuenta? <a href="/register" className="text-blue-600 font-semibold">Regístrate</a>
-          </p>
-       </form> 
-     </div>
-   )
-}
+        <p className="text-center text-sm mt-4 text-gray-500">
+          ¿No tienes cuenta?{" "}
+          <a href="/register" className="text-blue-600 font-semibold">
+            Regístrate
+          </a>
+        </p>
+      </form>
+    </div>
+  );
+};
 
-export { Login }
+export { Login };
