@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+
+
+.react-datepicker__navigation-icon::before {
+  width: 6px;
+  height: 6px;
+  border-width: 2px 2px 0 0;
+}
