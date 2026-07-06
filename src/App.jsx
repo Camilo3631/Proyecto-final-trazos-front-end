@@ -7,6 +7,9 @@ import { Register } from './pages/RegisterPage/RegisterPage'
 import { Footer } from "./shared/Footer/Footer";
 import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import { AppointmentsPage } from './pages/AppointmentsPage/AppointmentsPage';
+import { DoctorsPage } from './pages/DoctorsPage/DoctorsPage';
+
+
 
 
 function App() {
@@ -22,7 +25,8 @@ function App() {
         <Route path='/Register' element={<Register/>} />
         <Route path='/dashboard/:userId' element={<DashboardPage/>} />
         <Route path='/appointments/:userId' element={<AppointmentsPage/>} />
-     
+        <Route path='/doctors/:userId' element={<DoctorsPage/>} />
+      
 
 
 

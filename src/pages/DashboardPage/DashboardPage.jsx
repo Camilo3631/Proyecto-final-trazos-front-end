@@ -72,7 +72,7 @@ const DashboardPage = () => {
   return (
     <div className="min-h-[calc(100vh-80px)] bg-slate-700 p-8">
       <div className="w-full max-w-6xl mx-auto">
-        <h2 className="text-3xl text-white font-bold text-center mb-2 mt-5">
+        <h2 className="text-3xl text-white font-bold text-center mb-2 mt-9">
           Bienvenido
         </h2>
         <p className="text-gray-300 text-center mb-10">

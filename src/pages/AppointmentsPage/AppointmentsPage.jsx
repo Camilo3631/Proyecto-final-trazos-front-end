@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaCalendarAlt  } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router";
-import { AppointmentList } from "../../components/AppointmentList/AppointmentList";
+import { AppoimentList } from '../../components/AppointmentList/AppointmentList';
 
 
 const AppointmentsPage = () => {
@@ -45,7 +45,7 @@ const AppointmentsPage = () => {
         return (
             <div className="min-h-screen bg-slate-700 p-8">
               <div className="max-w-4xl mx-auto">
-               <h2 className="text-2xl font-bold text-white text-center mb-8 flex items-center justify-center gap-4">
+               <h2 className="text-2xl font-bold text-white text-center mb-8 flex items-center justify-center gap-4 mt-9">
                <FaCalendarAlt />  Mis citas
               </h2>
               
@@ -61,7 +61,7 @@ const AppointmentsPage = () => {
               )}
 
               {!cargando && citas.length > 0 && (
-                <AppointmentList citas={citas} cancelarCita={cancelarCita} />  
+                <AppoimentList citas={citas} cancelarCita={cancelarCita} />  
               )}
               
                <button
