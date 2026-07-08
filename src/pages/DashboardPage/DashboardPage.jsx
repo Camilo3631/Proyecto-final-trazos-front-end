@@ -14,6 +14,7 @@ const DashboardPage = () => {
   const [cargando, setCargando] = useState(false);
   const [paginaActual, setPaginaActual] = useState(1);
   const [mensaje, setMensaje] = useState(null);
+  const [busqueda, setBusqueda] = useState('');
 
   useEffect(() => {
     if (!selectedDate) return;
@@ -25,7 +26,7 @@ const DashboardPage = () => {
       setDisponibilidad(null);
       setPaginaActual(1);
       try {
-        const response = await fetch(`http://localhost:3000/api/disponibilidad/${fecha}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/disponibilidad/${fecha}`);
         const data = await response.json();
         setDisponibilidad(data);
       } catch (error) {
@@ -42,7 +43,7 @@ const DashboardPage = () => {
     try {
       const fecha = selectedDate.toISOString().split('T')[0];
 
-      const response = await fetch('http://localhost:3000/api/citas', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas`,  {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, doctorId, doctorName, fecha, hora })
@@ -63,8 +64,16 @@ const DashboardPage = () => {
   };
 
   const doctoresDisponibles = disponibilidad?.doctores?.filter(d => d.disponible) || [];
-  const totalPaginas = Math.ceil(doctoresDisponibles.length / DOCTORES_POR_PAGINA);
-  const doctoresPaginados = doctoresDisponibles.slice(
+
+  const doctoresFiltrados = busqueda
+   ? doctoresDisponibles.filter(doctor =>
+      doctor.especialidad.toLowerCase().includes(busqueda.toLocaleLowerCase()) ||
+      doctor.doctorName.toLowerCase().includes(busqueda.toLocaleLowerCase()) 
+    )
+    : doctoresDisponibles;
+  
+  const totalPaginas = Math.ceil(doctoresFiltrados.length / DOCTORES_POR_PAGINA);
+  const doctoresPaginados = doctoresFiltrados.slice(
     (paginaActual - 1) * DOCTORES_POR_PAGINA,
     paginaActual * DOCTORES_POR_PAGINA
   );
@@ -132,41 +141,58 @@ const DashboardPage = () => {
                 {disponibilidad.mensaje}
               </p>
 
+
               {disponibilidad.disponible && (
                 <div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="flex justify-center mb-4">
+                    <input
+                      type="text"
+                      placeholder="Buscar por especialidad..."
+                      value={busqueda}
+                      onChange={(e) => {setBusqueda(e.target.value); setPaginaActual(1); }}
+                      className="w-64 p-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                  </div>
+
+                  <div className="flex flex-wrap justify-center gap-4">
                     {doctoresPaginados.map((doctor) => (
-                      <div key={doctor.doctorId} className="border border-gray-200 rounded-xl p-4">
+                      <div key={doctor.doctorId} className="border border-gray-200 rounded-xl p-4 w-full md:w-72 mx-auto">
                         <p className="text-sm font-semibold text-gray-700 mb-1">{doctor.doctorName}</p>
                         <p className="text-xs text-gray-400 mb-3">{doctor.especialidad}</p>
                         <div className="flex flex-wrap gap-2">
-                          {doctor.horasLibres.map((hora) => (
+                          {doctor.horasLibres.map((hora) => ( 
                             <button
-                              key={hora}
-                              onClick={() => agendarCita(doctor.doctorId, doctor.doctorName, hora)}
-                              className="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full hover:bg-green-200 transition">
-                              {hora}
-                            </button>
-                          ))}
+                             key={hora}
+                             onClick={() => agendarCita(doctor.doctorId, doctor.doctorName, hora)}
+                             className="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full hover:bg-green-200 transition">
+                             {hora}
+                          </button>
+                         ))}
                         </div>
                       </div>
-                    ))}
+                      ))}
                   </div>
+
+                  {doctoresFiltrados.length === 0 && (
+                    <p className="text-gray-400 text-sm text-center mt-4">
+                      No hay doctores  disponibles para esa especialidad.
+                    </p>
+                  )}
 
                   {totalPaginas > 1 && (
                     <div className="flex items-center justify-center gap-3 mt-6">
-                      {paginaActual > 1 && (
-                        <button
-                          onClick={() => setPaginaActual(p => Math.max(p - 1, 1))}
-                          className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
-                          ← Anterior
-                        </button>
-                      )}
-                      <span className="text-gray-500 text-sm">
-                        {paginaActual} / {totalPaginas}
-                      </span>
+                     {paginaActual > 1 && (
+                       <button
+                        onClick={() => setPaginaActual(p => Math.max(p - 1, 1))}
+                        className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+                        ← Anterior
+                     </button>
+                     )}
+                     <span className="text-gray-500 text-xs">
+                      {paginaActual} / {totalPaginas}
+                     </span>
                       {paginaActual < totalPaginas && (
-                        <button
+                         <button
                           onClick={() => setPaginaActual(p => Math.min(p + 1, totalPaginas))}
                           className="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
                           Siguiente →
@@ -177,7 +203,7 @@ const DashboardPage = () => {
                 </div>
               )}
             </div>
-          )}
+                      )}
 
           {mensaje && (
             <div className="flex justify-center mt-6">
