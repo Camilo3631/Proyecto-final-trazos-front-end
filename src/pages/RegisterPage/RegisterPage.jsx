@@ -18,13 +18,11 @@ const Register = () => {
 
         const RegisterUser = async () => {
             try {
-                // Ruta actualizada a /api/register con método POST
-                const response = await fetch("http://localhost:3000/api/register", {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
                     method: "POST", 
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    // Enviamos las variables al servidor
                     body: JSON.stringify({
                         name,
                         email,
@@ -52,7 +50,7 @@ const Register = () => {
         return () => {
              console.log('Registro desmontado');
         };
-    }, [enviarFormulario, name, email, password, navigate]); // Al dejar el array vacío [], se ejecuta una sola vez al montar
+    }, [enviarFormulario, name, email, password, navigate]);
 
 
     const handleSubmit = (e) => {

@@ -1,35 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-const Login = () => {
+const LoginDoctorPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
-  const handledSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/doctors/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
         console.log("Login exitoso:", data);
 
-        navigate("/dashboard/" + data.usuario._id);
+        navigate("/doctor-dashboard/" + data.doctor._id);
       } else {
-        alert(data.message || "Correo o contraseña incorrectos.");
+        alert(data.mensaje || "Correo o contraseña incorrectos.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -40,7 +39,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-700">
       <form
-        onSubmit={handledSubmit}
+        onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-md max-w-md w-full"
       >
         <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
@@ -48,7 +47,7 @@ const Login = () => {
         </h1>
 
         <h2 className="text-2xl font-bold mb-6 text-center">
-          Iniciar sesión
+          Login Doctor
         </h2>
 
         <input
@@ -78,8 +77,11 @@ const Login = () => {
 
         <p className="text-center text-sm mt-4 text-gray-500">
           ¿No tienes cuenta?{" "}
-          <a href="/register" className="text-blue-600 font-semibold">
-            Regístrate
+          <a
+            href="/register-doctor"
+            className="text-blue-600 font-semibold"
+          >
+            Regístrate como doctor
           </a>
         </p>
       </form>
@@ -87,4 +89,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { LoginDoctorPage };
