@@ -10,7 +10,7 @@ const DoctorDashboardPage = () => {
   useEffect(() => {
       const obtDoctor = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/api/citas/doctor/${doctorId}`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas/doctor/${doctorId}`);
           const data = await response.json();
   
       

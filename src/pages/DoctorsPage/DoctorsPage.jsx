@@ -11,7 +11,7 @@ const DoctorsPage = () => {
   useEffect(() => {
     const obtenerDoctores = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/doctors`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/doctors`);
         const data = await response.json();
         setDoctores(data);
       } catch (error) {

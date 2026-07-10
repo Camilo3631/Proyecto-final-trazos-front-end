@@ -13,7 +13,7 @@ const VerifyPageDoctor = () => {
     const verificarCorreo = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/doctors/verify/${token}`
+         `${import.meta.env.VITE_API_URL}/api/doctors/verify/${token}`
         );
 
         const data = await response.json();

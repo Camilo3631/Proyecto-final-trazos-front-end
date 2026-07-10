@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router";
 const DoctorAppointmentsPage = () => {
   const { doctorId } = useParams();
   const navigate = useNavigate();
+ 
+
 
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -13,7 +15,7 @@ const DoctorAppointmentsPage = () => {
     const obtenerCitasDoctor = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/citas/doctor/${doctorId}`
+           `${import.meta.env.VITE_API_URL}/api/citas/doctor/${doctorId}`
         );
 
         const data = await response.json();
@@ -22,7 +24,7 @@ const DoctorAppointmentsPage = () => {
           data.map(async (cita) => {
             try {
               const responseUsuario = await fetch(
-                `http://localhost:3000/api/users/${cita.userId}`
+                `${import.meta.env.VITE_API_URL}/api/users/${cita.userId}`
               );
 
               if (responseUsuario.ok) {
@@ -70,7 +72,7 @@ const DoctorAppointmentsPage = () => {
     <div className="min-h-screen bg-slate-700 p-8">
       <div className="max-w-5xl mx-auto">
 
-        <h2 className="text-3xl font-bold text-white text-center mb-8 flex items-center justify-center gap-4 mt-9">
+        <h2 className="text-3xl font-bold text-white text-center mb-8 flex items-center justify-center gap-4 mt-9 ">
           <FaCalendarAlt />
           Citas agendadas
         </h2>

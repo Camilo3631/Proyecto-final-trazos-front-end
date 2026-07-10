@@ -11,7 +11,7 @@ const LoginDoctorPage = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/doctors/login",
+        `${import.meta.env.VITE_API_URL}/api/doctors/login`,
         {
           method: "POST",
           headers: {
