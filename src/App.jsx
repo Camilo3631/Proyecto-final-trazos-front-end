@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router";
 import './App.css';
 import { Navbar } from "./shared/Navbar/Navbar";
 import { NavbarPrivado } from "./shared/NavbarPrivado/NavbarPrivado";
-import { NavbarPrivadoDoctor } from "./shared/NavbarPrivadoDoctor/NavbarPrivadoDoctor"; // ✅ Corregido
+import { NavbarPrivadoDoctor } from "./shared/NavbarPrivadoDoctor/NavbarPrivadoDoctor"; 
+import { VerifyCodePage } from "./pages/VerifyCodePage/VerifyCodePage";
 import { Footer } from "./shared/Footer/Footer";
 import { Home } from './pages/HomePage/HomePage';
 import { Login } from "./pages/LoginPage/LoginPage";
@@ -11,10 +12,10 @@ import { DashboardPage } from "./pages/DashboardPage/DashboardPage";
 import { DoctorDashboardPage } from "./pages/DoctorDashboardPage/DoctorDashboardPage";
 import { AppointmentsPage } from './pages/AppointmentsPage/AppointmentsPage';
 import { DoctorAppointmentsPage } from "./pages/DoctorAppointmentsPage/DoctorAppointmentsPage";
-import { LoginDoctorPage } from './pages/LoginDoctorPage/LoginDocotPage';
+import { LoginDoctorPage } from "./pages/LoginDoctorPage/LoginDoctorPage";
 import { DoctorsPage } from './pages/DoctorsPage/DoctorsPage';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
-import { VerifyPageDoctor } from "./pages/VerifyPageDoctor/VerifyPageDoctor";
+
 import { RegisterDoctorPage } from './pages/RegisterDoctorPage/RegisterDoctorPage';
 
 const rutasPrivadas = [
@@ -70,10 +71,10 @@ function App() {
           <Route path="/dashboard/:userId" element={<DashboardPage />} />
           <Route path="/appointments/:userId" element={<AppointmentsPage />} />
           <Route path="/doctor-dashboard/:doctorId" element={<DoctorDashboardPage />} />
+          <Route path="/verify-code" element={<VerifyCodePage />} />
           <Route path="/doctor-appointments/:doctorId" element={<DoctorAppointmentsPage />} />
           <Route path="/doctors/:userId" element={<DoctorsPage />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
-          <Route path="/verify/:token" element={<VerifyPageDoctor />} />
         </Routes>
       </Layout>
     </BrowserRouter>

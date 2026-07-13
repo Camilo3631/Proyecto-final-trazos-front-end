@@ -68,22 +68,14 @@ const Register = () => {
      <div className="min-h-screen flex items-center justify-center bg-slate-700">
        <form
         onSubmit={handleSubmit}
-         className="bg-white p-8 rounded-2xl shadow-md max-w-md">
+         className="bg-slate-500  p-8 rounded-2xl shadow-md max-w-md">
 
-          <h1 className="text-3xl font-bold text-center mb-1 text-blue-600">
-          Mój Lekarz
-        </h1>
-
-
-
-         <h2 className="text-2xl font-bold mb-6 text-center">
-           Registro
-          </h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">Registrar Usuario</h2>
 
            <input
              type="text"
              placeholder="Nombre"
-             className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:blue-500"
+             className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:blue-500 bg-slate-700 text-slate-400"
              value={name}
              onChange={(e) => setName(e.target.value)}
              />
@@ -91,7 +83,7 @@ const Register = () => {
              <input
               type="email"
                placeholder="Email"
-               className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+               className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-700 text-slate-400"
                value={email}
                onChange={(e) => setEmail(e.target.value)}
                />
@@ -99,7 +91,7 @@ const Register = () => {
                <input 
                 type="password"
                 placeholder="Contraseña"
-                className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-700 text-slate-400"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                  />
@@ -107,7 +99,7 @@ const Register = () => {
                 <input 
                   type="password"
                   placeholder="Confirmar contraseña"
-                  className="w-full p-3 mb-6 border rounded-lg focus:ring-blue-500"
+                  className="w-full p-3 mb-6 border rounded-lg focus:ring-blue-500  bg-slate-700 text-slate-400"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   />
