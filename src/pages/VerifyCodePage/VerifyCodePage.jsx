@@ -25,7 +25,7 @@ const VerifyCodePage = () => {
       setError('');
 
       try {
-        const response = await fetch('http://localhost:3000/api/doctors/verify-code', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/doctors/verify-code`, {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json'

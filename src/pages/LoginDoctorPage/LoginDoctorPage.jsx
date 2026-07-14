@@ -13,7 +13,7 @@ const LoginDoctorPage = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [codigo, setCodigo] = useState('');
+  const [codigo, setCodigo] = useState('' );
 
   const mostrarAlerta = (mensaje, tipo = 'info') => {
     setAlerta({ mensaje, tipo })
@@ -36,7 +36,7 @@ const LoginDoctorPage = () => {
      setCargando(true);
 
      try {
-      const response = await fetch('http://localhost:3000/api/doctors/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/doctors/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,8 +75,9 @@ const LoginDoctorPage = () => {
 
     setCargando(true)
 
+   
     try {
-      const response = await fetch('http://localhost:3000/api/doctors/verify-login-code', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/doctors/verify-login-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -94,6 +95,7 @@ const LoginDoctorPage = () => {
 
         setTimeout(() => {
           navigate(`/doctor-dashboard/${data.doctor._id}`);
+          
         }, 2000);
       } else {
         setError(data.mensaje || 'Código inválido');

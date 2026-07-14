@@ -34,7 +34,11 @@ const DoctorDashboardPage = () => {
     <div className="min-h-screen bg-slate-700 p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-white text-center mt-10 mb-3">
-         Panel del{doctor?.[0]?.doctorName ? `, ${doctor[0].doctorName}` : ""}
+          {doctor?.[0]?.doctorName
+          ? `${doctor[0].doctorName.startsWith("Dra.")
+          ? "Panel de la"
+          : "Panel del"} ${doctor[0].doctorName}`
+          : "Panel del médico"}
         </h1>
 
         <p className="text-gray-300 text-center mb-10">
