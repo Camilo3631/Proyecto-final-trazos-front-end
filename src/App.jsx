@@ -15,7 +15,7 @@ import { AppointmentsPage } from './pages/AppointmentsPage/AppointmentsPage';
 import { LoginDoctorPage } from "./pages/LoginDoctorPage/LoginDoctorPage";
 import { DoctorsPage } from './pages/DoctorsPage/DoctorsPage';
 import { ProfilePage } from './pages/ProfilePage/ProfilePage';
-
+import { ProfilePageDoctor } from "./pages/ProfilePageDoctor/ProfilePageDoctor";
 import { RegisterDoctorPage } from './pages/RegisterDoctorPage/RegisterDoctorPage';
 
 const rutasPrivadas = [
@@ -27,7 +27,8 @@ const rutasPrivadas = [
 
 const rutasPrivadasDoctor = [
 '/doctor-dashboard',
-'/doctor-appointments'
+'/doctor-appointments',
+'/doctor-profile/:doctorId'
 ];
 
 const Layout = ({ children }) => {
@@ -75,6 +76,7 @@ function App() {
           <Route path="/doctor-appointments/:doctorId" element={<DoctorAppointmentsPage />} />
           <Route path="/doctors/:userId" element={<DoctorsPage />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/doctor-profile/:doctorId" element={<ProfilePageDoctor />} />
         </Routes>
       </Layout>
     </BrowserRouter>

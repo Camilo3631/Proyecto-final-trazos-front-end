@@ -43,6 +43,12 @@ const NavbarPrivadoDoctor = () => {
             className="block px-4 py-2 text-sm text-white hover:bg-slate-700 transition">
             Mis citas
           </Link>
+           <Link
+             to={`/doctor-profile/${doctorId}`}
+             onClick={() => setMenuAbierto(false)}
+             className="block px-4 py-2 text-sm text-white hover:bg-slate-700 transition">
+              MI Perfil
+            </Link>
           <div className="border-t border-slate-600 mt-2 pt-2">
             <button
               onClick={cerrarSesión}
