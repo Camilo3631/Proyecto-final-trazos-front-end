@@ -28,7 +28,8 @@ const rutasPrivadas = [
 const rutasPrivadasDoctor = [
 '/doctor-dashboard',
 '/doctor-appointments',
-'/doctor-profile/:doctorId'
+'/doctor-profile'
+
 ];
 
 const Layout = ({ children }) => {
