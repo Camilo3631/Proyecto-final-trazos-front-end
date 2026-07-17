@@ -1,4 +1,4 @@
-import { FaCalendarAlt, FaStethoscope, FaClock } from "react-icons/fa";
+import { FaCalendarAlt, FaStethoscope, FaClock, FaNotesMedical, FaCheckCircle } from "react-icons/fa";
 
 const AppoimentList = ({ citas, cancelarCita }) => {
 
@@ -12,6 +12,7 @@ return (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
     {citas.map((cita) => {
     const finalizada = esCitaPasada(cita.fecha, cita.hora)
+    const esSeguimiento = cita.tipo === 'seguimiento';
   
 
      return (
@@ -31,6 +32,11 @@ return (
            {cita.doctorName}
          </h3>
        </div>
+       {esSeguimiento && (
+         <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+           <FaCheckCircle /> SEGUIMIENTO
+         </span>
+       )}
 
       <div className="border-t pt-3 flex justify-between items-center">
         <div className={finalizada ? "line-through decoration-red-500 decoration-2 text-gray-400" : ""}>
@@ -39,6 +45,10 @@ return (
           </p>
           <p className="text-gray-500 text-sm flex items-center gap-1">
             <FaClock /> {cita.hora}
+          </p>
+
+          <p className="text-gray-600 text-sm flex items-center gap-2">
+            <FaNotesMedical /> {cita.motivo}
           </p>
         </div>
 

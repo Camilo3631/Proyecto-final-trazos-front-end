@@ -15,7 +15,7 @@ const AppointmentsPage = () => {
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -34,7 +34,7 @@ const AppointmentsPage = () => {
   useEffect(() => { 
     const obtenerCitas = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/citas/${userId}`);
+       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas/${userId}`);
         const data = await response.json();
 
         setCitas(data);
@@ -69,7 +69,7 @@ const AppointmentsPage = () => {
   if (!result.isConfirmed) return;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/citas/${citaId}`, {
+   const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas/${citaId}`, {
         method: 'DELETE'
     });
 

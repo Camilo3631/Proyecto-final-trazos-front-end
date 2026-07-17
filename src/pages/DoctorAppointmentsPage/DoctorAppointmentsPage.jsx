@@ -21,13 +21,13 @@ const DoctorAppointmentsPage = () => {
   useEffect(() => {
     const obtenerCitasDoctor = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/citas/doctor/${doctorId}`);
+        const response = await fetch( `${import.meta.env.VITE_API_URL}/api/citas/doctor/${doctorId}`);
         const data = await response.json();
 
         const citasConUsuario = await Promise.all(
           data.map(async (cita) => {
             try {
-              const responseUsuario = await fetch(`http://localhost:3000/api/users/${cita.userId}`);
+              const responseUsuario = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${cita.userId}`);
               if (responseUsuario.ok) {
                 const usuario = await responseUsuario.json();
                 return {
@@ -72,7 +72,7 @@ const DoctorAppointmentsPage = () => {
     setCargandoSeguimiento(true);
 
     try {
-      const response = await fetch(`http://localhost:3000/api/citas/seguimiento`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas/seguimiento`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

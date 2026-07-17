@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import DatePicker from "react-datepicker";
 import { FaCalendarAlt, FaStethoscope, FaClock, FaUser, FaSearch, FaPencilAlt, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { BsCalendarCheck } from "react-icons/bs";
+import Swal from 'sweetalert2';
+
 import "react-datepicker/dist/react-datepicker.css";
 
 const DOCTORES_POR_PAGINA = 3;
@@ -22,7 +24,7 @@ const DashboardPage = () => {
  useEffect(() => {
    const obtenerUsuario = async () => {
      try {
-       const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`);
        const data = await response.json();
 
 
@@ -49,7 +51,7 @@ const DashboardPage = () => {
        setDisponibilidad(null)
        setPaginaActual(1)
        try {
-        const response = await fetch(`http://localhost:3000/api/disponibilidad/${fecha}`);
+         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/disponibilidad/${fecha}`);
          const data = await response.json();
          setDisponibilidad(data);
        } catch (error) {
@@ -64,14 +66,24 @@ const DashboardPage = () => {
 
   const agendarCita = async (doctorId, doctorName, hora) => {
      if (!motivo.trim()) {
-       alert('Por favor, describe el motivo de tu consulta');
+        Swal.fire({
+          icon: 'warning',
+          title: 'Motivo requerido',
+          text: 'Por favor, describe el motivo de tu consulta.',
+          confirmButtonText: 'Entendido',
+           width: '290px',
+           padding: '1rem',
+           customClass: {
+          popup: 'rounded-3xl'
+           }
+        });
       return;
      }
 
      try {
         const fecha = selectedDate.toLocaleDateString('en-CA');
 
-        const response = await fetch(`http://localhost:3000/api/citas`,  {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas`,  {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -93,7 +105,11 @@ const DashboardPage = () => {
            setMotivo('');
            setSelectedDate(new Date(selectedDate)); 
          } else {
-           alert(data.mensaje);
+           Swal.fire({
+              icon: 'error',
+              title: 'No se pudo agendar la cita',
+              text: data.mensaje
+           });
          }
        } catch (error) {
          console.error("Error al agendar cita:", error);
