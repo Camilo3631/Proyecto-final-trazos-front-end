@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { FaArrowLeft }from "react-icons/fa";
 import { DoctorList } from "../../components/DoctorList/DoctorList";
 
 const DoctorsPage = () => {
@@ -45,8 +46,10 @@ const DoctorsPage = () => {
 
         <button
           onClick={() => navigate(`/dashboard/${userId}`)}
-          className="mt-8 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition block mx-auto">
-          Volver
+           className="mt-12 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white px-8 py-4 rounded-lg font-bold transition transform hover:scale-105 flex items-center gap-2 mx-auto shadow-lg"
+          >
+           <FaArrowLeft />
+            Volver al dashboard
         </button>
       </div>
     </div>
