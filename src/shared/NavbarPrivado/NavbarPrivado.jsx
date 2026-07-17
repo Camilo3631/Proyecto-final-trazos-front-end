@@ -15,7 +15,7 @@ const NavbarPrivado = () => {
   return (
     <nav className="bg-slate-700 shado-md px-6 py-3 relative">
       <div className="flex items-center justify-between">
-        <Link to={'/dashboard/${userId}`'}>
+         <Link to="/">
          <img src="/Logo.png" alt="Mój Lekarz" className="h-20 w-auto"/>
         </Link> 
 
