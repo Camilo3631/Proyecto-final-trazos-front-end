@@ -48,7 +48,7 @@ const  Register = () => {
 
     return (
        <div className="min-h-screen flex items-center justify-center bg-slate-700">
-        <from 
+        <form 
           onSubmit={handleSubmit}
           className="bg-slate-500 p-8 rounded-2xl shadow-md max-w-md w-full"
           >
@@ -96,7 +96,7 @@ const  Register = () => {
          >
            Crear cuenta
          </button>
-       </from>
+       </form>
      </div>
    );
 };
