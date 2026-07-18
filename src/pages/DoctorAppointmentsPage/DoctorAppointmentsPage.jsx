@@ -193,7 +193,11 @@ const DoctorAppointmentsPage = () => {
                         <p className="flex items-center gap-2">
                           <FaStethoscope className="text-blue-500" /> <strong>Doctor:</strong> {cita.doctorName}
                         </p>
+                        <p className="flex items-center gap-2">
+                          <FaNotesMedical className="text-blue-500"/> <strong>Motivo:</strong> {cita.motivo}
+                        </p>
                       </div>
+                      
 
                       <div className="mt-4">
                         <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">
@@ -238,6 +242,9 @@ const DoctorAppointmentsPage = () => {
                         <p className="flex items-center gap-2">
                           <FaStethoscope className="text-orange-500" /> <strong>Doctor:</strong> {cita.doctorName}
                         </p>
+                        <p className="flex items-center gap-2">
+                          <FaNotesMedical className="text-orange-500" /> <strong>Motivo:</strong> {cita.motivo}
+                        </p>
                       </div>
 
                       <button
@@ -262,10 +269,10 @@ const DoctorAppointmentsPage = () => {
         </button>
 
         {mostrarModal && (
-                 <div className="fixed inset-0 bg-slate-700 bg-opacity-50 flex items-center justify-center p-4 z-50">
-                   <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
-                     <div className="flex justify-between items-center mb-6">
-                       <h3 className="text-2xl font-bold text-slate-800">Agendar Seguimiento</h3>
+             <div className="fixed inset-0 bg-slate-700 bg-opacity-50 flex items-center justify-center p-4 z-50">
+                <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+                  ´<div className="flex justify-between items-center mb-6">
+                     <h3 className="text-2xl font-bold text-slate-800">Agendar Seguimiento</h3>
                        <button
                          onClick={() => setMostrarModal(false)}
                          className="text-gray-400 hover:text-gray-600 transition"
