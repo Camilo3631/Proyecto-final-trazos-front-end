@@ -55,6 +55,9 @@ const DoctorAppointmentsPage = () => {
 
     if (doctorId) {
       obtenerCitasDoctor();
+
+      const interval = setInterval(obtenerCitasDoctor, 5000);
+      return () => clearInterval(interval);
     }
   }, [doctorId]);
 
@@ -112,8 +115,13 @@ const DoctorAppointmentsPage = () => {
       cita.emailUsuario?.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  const citasProximas = citasFiltradas.filter(c => new Date(`${c.fecha}T${c.hora}`) >= new Date());
-  const citasFinalizadas = citasFiltradas.filter(c => new Date(`${c.fecha}T${c.hora}`) < new Date());
+  const citasProximas = citasFiltradas
+    .filter(c => new Date(`${c.fecha}T${c.hora}`) >= new Date())
+    .sort((a, b) => new Date(`${a.fecha}T${a.hora}`) - new Date(`${b.fecha}T${b.hora}`));
+
+  const citasFinalizadas = citasFiltradas
+    .filter(c => new Date(`${c.fecha}T${c.hora}`) < new Date())
+    .sort((a, b) => new Date(`${b.fecha}T${b.hora}`) - new Date(`${a.fecha}T${a.hora}`));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-700 p-8">
