@@ -132,7 +132,7 @@ const handleEnviarEdicion = async () => {
   const citaId = citaEditando._id;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/citas/${citaId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/citas/${citaId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
