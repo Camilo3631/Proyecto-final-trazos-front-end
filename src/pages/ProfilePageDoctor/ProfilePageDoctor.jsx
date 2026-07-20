@@ -10,7 +10,7 @@ const ProfilePageDoctor = () =>  {
   const navigate = useNavigate();
 
   const [doctor, setDoctor] = useState(null);
-  const [cargando, setCargando] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
       const obtenerDoctor = async () => {
@@ -34,28 +34,30 @@ const ProfilePageDoctor = () =>  {
      obtenerDoctor();
   }, [doctorId]);
 
-  const eliminarCuenta = async  () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/doctors`, {
-        method: 'DELETE'
+  const eliminarCuenta = async () => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/doctors/${doctorId}`,
+      {
+        method: "DELETE",
       }
-     );
+    );
 
-     if (response.ok) {
-        navigate('/register-doctor');
-     }
-   } catch (error) {
-     console.log('Error al eliminar cuenta:', error);
+    if (response.ok) {
+      navigate("/register-doctor");
     }
-   };
+  } catch (error) {
+    console.log("Error al eliminar cuenta:", error);
+  }
+};
 
-   if (cargando) {
-      return (
-        <p className="text-white text-center mt-10">
-           Cargando...
-        </p>
-      );
-   }
+if (cargando) {
+  return (
+    <p className="text-center mt-10">
+      Cargando...
+    </p>
+  );
+}
 
    return (
      <div className="min-h-[calc(100vh-80px)] bg-slate-700 flex items-center justify-center p-8">
