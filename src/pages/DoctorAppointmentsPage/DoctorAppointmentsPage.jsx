@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaCalendarAlt, FaSearch, FaTimes, FaCheckCircle, FaUser, FaEnvelope, FaClock, FaStethoscope, FaNotesMedical, FaArrowLeft } from "react-icons/fa";
+import { FaCalendarAlt, FaSearch, FaTimes, FaCheckCircle, FaUser, FaEnvelope, FaClock, FaStethoscope, FaNotesMedical, FaArrowLeft, FaEdit} from "react-icons/fa";
 import { useNavigate, useParams } from "react-router";
 
 const DoctorAppointmentsPage = () => {
@@ -17,6 +17,12 @@ const DoctorAppointmentsPage = () => {
   const [motivo, setMotivo] = useState('');
   const [cargandoSeguimiento, setCargandoSeguimiento] = useState(false);
   const [mensajeExito, setMensajeExito] = useState('');
+
+  const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
+  const [citaEditando, setCitaEditando] = useState(null);
+  const [fechaEditada, setFechaEditada] = useState('');
+  const [horaEditada, setHoraEditada] = useState('');
+  const [cargandoEdicion, setCargandoEdicion] = useState(false);
 
   useEffect(() => {
     const obtenerCitasDoctor = async () => {
@@ -108,6 +114,60 @@ const DoctorAppointmentsPage = () => {
       setCargandoSeguimiento(false);
     }
   };
+
+  const handleAbrirEdicion = (cita) => {
+  setCitaEditando(cita);
+  setFechaEditada(cita.fecha);
+  setHoraEditada(cita.hora);
+  setMostrarModalEdicion(true);
+}
+
+const handleEnviarEdicion = async () => {
+  if (!fechaEditada || !horaEditada) {
+    alert('Por favor completa la fecha y la hora');
+    return;
+  }
+
+  setCargandoEdicion(true);
+  const citaId = citaEditando._id;
+
+  try {
+    const response = await fetch(`http://localhost:3000/api/citas/${citaId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fecha: fechaEditada,
+        hora: horaEditada,
+        doctorId: doctorId
+      })
+    });
+
+    const resultado = await response.json();
+
+    if (response.ok) {
+      setMensajeExito('✅ Cita actualizada con éxito');
+      setTimeout(() => setMensajeExito(''), 3000);
+      
+      setCitas(prevCitas => 
+        prevCitas.map(c => 
+          c._id === citaId ? { ...c, fecha: fechaEditada, hora: horaEditada } : c
+        )
+      );
+
+      setMostrarModalEdicion(false);
+      setCitaEditando(null);
+      setFechaEditada('');
+      setHoraEditada('');
+    } else {
+      alert(resultado.mensaje || 'Error al actualizar la cita');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error al actualizar la cita');
+  } finally {
+    setCargandoEdicion(false);
+  }
+};
 
   const citasFiltradas = citas.filter(
     (cita) => 
@@ -207,10 +267,16 @@ const DoctorAppointmentsPage = () => {
                       </div>
                       
 
-                      <div className="mt-4">
+                      <div className="mt-4 flex flex-col gap-2">
                         <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs font-semibold">
                           Próxima cita
                         </span>
+                        <button
+                          onClick={() => handleAbrirEdicion(cita)}
+                          className="w-full bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition font-semibold flex items-center justify-center gap-2"
+                        >
+                          <FaEdit /> Editar cita
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -363,9 +429,76 @@ const DoctorAppointmentsPage = () => {
                    </div>
                  </div>
                )}
+
+               {mostrarModalEdicion && (
+                <div className="fixed inset-0 bg-slate-700 bg-opacity-50 flex items-center justify-center p-4 z-50">
+                  <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+                    <div className="flex justify-between items-center mb-6">
+                      <h3 className="text-2xl font-bold text-slate-800">Editar Cita</h3>
+                      <button
+                       onClick={() => setMostrarModalEdicion(false)}
+                       className="text-gray-400 hover:text-gray-600 transition"
+                       >
+                        <FaTimes size={24} />
+                       </button>
+                    </div>
+
+                    <div className="mb-6 p-4 bg-yellow-50 rounded-xl border-l-4 border-yellow-500">
+                      <p className="text-slate-700 mb-1">
+                        <strong>Paciente:</strong> {citaEditando?.nombreUsuario}
+                      </p>
+                      <p className="text-slate-700 text-sm">
+                        Modificando fecha y hora asignadas.
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                       <label className="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-2">
+                        <FaCalendarAlt className="text-yellow-500" /> Nueva Fecha
+                       </label>
+                       <input
+                         type="date"
+                         value={fechaEditada}
+                         onChange={(e) => setFechaEditada(e.target.value)}
+                         className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition"
+                         />
+                      </div>
+
+                      <div>
+                        <label className="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-2">
+                        <FaClock className="text-yellow-500" /> Nueva Hora
+                       </label>
+                       <input
+                        type="time"
+                        value={horaEditada}
+                        onChange={(e) => setHoraEditada(e.target.value)}
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3 mt-6">
+                      <button
+                        onClick={() => setMostrarModalEdicion(false)}
+                        className="flex-1 bg-gray-200 text-gray-700 px-4 py-3 rounded-lg hover:bg-gray-300 transition font-semibold"
+                        >
+                        Cancelar
+                       </button>
+                       <button
+                        onClick={handleEnviarEdicion}
+                        disabled={cargandoEdicion}
+                       className="flex-1 bg-yellow-500 text-white px-4 py-3 rounded-lg hover:bg-yellow-600 transition font-semibold disabled:bg-yellow-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                       >
+                       {cargandoEdicion ? 'Guardando...' : 'Guardar Cambios'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+               )}
              </div>
-           </div>
-         );
-       };
-       
-       export { DoctorAppointmentsPage };
+        </div>
+     );
+ };
+      
+export { DoctorAppointmentsPage };

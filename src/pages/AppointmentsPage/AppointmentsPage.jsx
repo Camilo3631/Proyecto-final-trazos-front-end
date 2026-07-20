@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCalendarAlt, FaArrowLeft, FaCheckCircle,  FaStethoscope } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router";
+import {  useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AppoimentList } from "../../components/AppointmentList/AppointmentList";
 
@@ -46,6 +46,12 @@ const AppointmentsPage = () => {
     };
  
      obtenerCitas();
+
+     const intervalo = setInterval(() => {
+       obtenerCitas();
+     }, 30000);
+
+     return() => clearInterval(intervalo);
    }, [userId]);
 
    const cancelarCita = async (citaId) => {
@@ -101,10 +107,12 @@ const AppointmentsPage = () => {
 
    
 
-   const citasProximas = citas.filter(
-     c => new Date(`${c.fecha}T${c.hora}`) >= new Date()
-   );
+   
 
+   const citasProximas = citas
+     .filter(c => new Date(`${c.fecha}T${c.hora}`) >= new Date())
+     .filter(c => c.tipo !== 'seguimiento');
+   
    const citasFinalizadas = citas.filter(
     c => new Date(`${c.fecha}T${c.hora}`) < new Date()
    );
